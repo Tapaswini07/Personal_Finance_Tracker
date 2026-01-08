@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MoneyWise</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <h2>💰 MoneyWise</h2>
+            <ul>
+                <li><a href="#dashboard" class="active">Dashboard</a></li>
+                <li><a href="expense.html">Add Expense</a></li>
+                <li><a href="income.html">Add Income</a></li>
+                <li><a href="budget.html">Set Budget</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="#" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <header class="dashboard-header">
+                <h1>Welcom to Your Dashbord</h1>
+                <p id="userGreeting"></p>
+            </header>
+            <section class="summary">
+                <div class="card">
+                    <h3>Total Income</h3>
+                    <p id="totalIncome">$0.00</p>
+                </div>
+                <div class="card">
+                    <h3>Total Expenses</h3>
+                    <p id="totalExpenses">$0.00</p>
+                </div>
+                <div class="card">
+                    <h3>Balance</h3>
+                    <p id="balance">$0.00</p>
+                </div>
+            </section>
+            <section class="recent-transactions">
+                <h3>Recnt Transactions</h3>
+                <ul id="recentList"></ul>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

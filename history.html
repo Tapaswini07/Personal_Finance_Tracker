@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History - MoneyWise</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <h2>💰 MoneyWise</h2>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="expense.html">Add Expense</a></li>
+                <li><a href="income.html">Add Income</a></li>
+                <li><a href="budget.html">Set Budget</a></li>
+                <li><a href="history.html" class="active">History</a></li>
+                <li><a href="#" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <h1>Transacton Historry</h1>
+            <div class="filters">
+                <input type="text" id="search" placeholder="Serch transactons...">
+                <select id="filterCategory">
+                    <option value="">All Categories</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="utilities">Utilities</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="transportation">Transportation</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="food">Food</option>
+                    <option value="salary">Salary</option>
+                    <option value="other">Other</option>
+                </select>
+                <select id="filterType">
+                    <option value="">All Types</option>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+            </div>
+            <ul id="historyList"></ul>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
