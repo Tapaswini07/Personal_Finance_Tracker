@@ -2,25 +2,42 @@ const express = require('express');
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+// Serve static files (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname))); 
 
-// MySQL connection
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: 'localhost',
-  user: 'root', // Change to your MySQL user
-  password: '', // Change to your MySQL password
-  database: 'finance_tracker'
+  port: 3306,
+  user: 'root',
+  password: 'Niki@2005',
+  database: 'finance_tracker',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
-  if (err) throw err;
-  console.log('Conected to MySQL');
+// ...existing code...
+// Replace the old `db.connect(...)` (not available on a pool) with:
+db.getConnection((err, connection) => {
+  if (err) {
+    console.error('MySQL connection error:', err.message);
+    process.exit(1); // optional: stop app if DB is not available
+  } else {
+    console.log('Connected to MySQL (pool)');
+    connection.release();
+  }
 });
 
 // Routes
+// Serve the main page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 app.post('/register', async (req, res) => {
   const { name, email, age, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -39,6 +56,13 @@ app.post('/login', (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).send('Invalid password');
     res.send({ id: user.id, name: user.name, age: user.age });
+  });
+});
+
+app.get('/users', (req, res) => {
+  db.query('SELECT * FROM users', async (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.send(results.map(user => ({ id: user.id, name: user.name, email: user.email, age: user.age })));
   });
 });
 
@@ -75,6 +99,7 @@ app.post('/budgets', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('Servr running on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
